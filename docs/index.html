@@ -1,0 +1,46 @@
+<html>
+
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
+    <link rel="stylesheet" href="./styles/table.css"></link>
+    <script src="js/table.js"></script>
+</head>
+
+<body onload="pageLoad()">
+
+    <div class="section">
+        <div class="container">
+            <div class="columns is-centered">
+                <div class=column>
+                        <h1 class="title has-text-centered">VEX Scorigami</h1>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <p> TABLE: </p>
+        <table id="scoreTable">
+            <tbody>
+                <tr>
+                <td id="hLabel" class=axisLabel colspan="75">Winning Team Score</td>
+                </tr>
+                <tr id="row-1">
+                    <th id="col">0</th>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+    
+    <div class="section">
+        <h2 class="title is-4 has-text-centered"> What is Scorigami?</h2>
+        <p>Scorigami is a concept proposed by Jon Bois. Fundementally, the chart above represents every possible win-lose score pair. If such a pair is scored, the box gets filled. You can find more information about the origin and rules of Scorigami <a href="https://nflscorigami.com/"> here.  </href></p>
+            <h2 class="title is-4 has-text-centered"> How does this work?</h2>
+            <p>Thanks to the amazing API at vexdb.io, this entire project was made without major difficulty!</p>    
+    </div>
+
+    <button id="testing" onclick="pageLoad()">Testing</button>
+    
+</body>
+
+</html>
