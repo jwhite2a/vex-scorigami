@@ -1,5 +1,5 @@
 function getData(){
-    var url = "https://api.vexdb.io/v1/get_matches?sku=RE-VRC-17-3805"
+    var url = "https://api.vexdb.io/v1/get_matches?sku=RE-VRC-18-5649"
     console.log('hello1');
     var request = new XMLHttpRequest();
     request.open('GET', url, true);

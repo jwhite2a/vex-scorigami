@@ -3,6 +3,7 @@
 <head>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
     <link rel="stylesheet" href="./styles/table.css"></link>
+    <link rel="import" href="./data/demo.html"></link>
     <script src="js/table.js"></script>
 </head>
 
@@ -34,13 +35,21 @@
     
     <div class="section">
         <h2 class="title is-4 has-text-centered"> What is Scorigami?</h2>
-        <p>Scorigami is a concept proposed by Jon Bois. Fundementally, the chart above represents every possible win-lose score pair. If such a pair is scored, the box gets filled. You can find more information about the origin and rules of Scorigami <a href="https://nflscorigami.com/"> here.  </href></p>
+        <p>Scorigami is a concept proposed by Jon Bois. Fundementally, the chart above represents every possible win-lose score pair. If such a pair is scored, the box gets filled. You can find more information about the origin and rules of Scorigami <a href="https://nflscorigami.com/"> here</a>.</p>
             <h2 class="title is-4 has-text-centered"> How does this work?</h2>
             <p>Thanks to the amazing API at vexdb.io, this entire project was made without major difficulty!</p>    
     </div>
+    <div>
+        <button id="testing" onclick="pageLoad()">Testing</button>
+    </div>
+    <div>
+        <button id="readCSV" onclick="readCSV()">read CSV</button>
 
-    <button id="testing" onclick="pageLoad()">Testing</button>
-    
+    </div>
+    <div>
+        <img src="img/maxresdefault.jpg" alt="hello">
+        <a href="data/demo.html">click for download</a> 
+    </div>
 </body>
 
 </html>

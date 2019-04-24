@@ -10,6 +10,10 @@
 	color: white;
 }
 
+.blank {
+    text-align: center;
+}
+
 th, td{
 	min-width: 15px;
 	width: 15px;
@@ -25,6 +29,21 @@ th{
 
 td{
 	font-size: 8px;
+}
+
+td.axisLabel{
+	font-size: 13px;
+	text-align: center;
+	font-weight: bold;
+}
+
+td#vAxisLabel{
+	padding-top: 12px;
+}
+
+.vertical{
+	white-space: nowrap;
+	writing-mode: tb-rl;
 }
 
 #scoreTable{

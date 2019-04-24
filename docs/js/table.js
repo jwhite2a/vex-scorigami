@@ -1,6 +1,6 @@
 function pageLoad(){
-
-  getData();
+    
+    getData();
 }
 
 var mainMatches = []
@@ -53,13 +53,15 @@ class SimpleMatch {
 
 
 function getData(){
-    
-    var url = "https://api.vexdb.io/v1/get_matches?sku=RE-VRC-17-4887"
+    var t0 = performance.now();
+    var url = "https://api.vexdb.io/v1/get_matches?sku=RE-VRC-18-5649"
     var request = new XMLHttpRequest();
     request.open('GET', url, true);
     request.responseType = 'json';
     var all_matches = [];
     request.onload = function(e) {
+        var t2 = performance.now();
+        console.log("Time2: " + (t2 -t1) );
         console.log(request.status);
         console.log(request.response);
         for(let i = 0; i < request.response.result.length; i++){
@@ -69,10 +71,18 @@ function getData(){
                                     blueScore = json_match.bluescore);
             all_matches.push(match);
         }
+        var t3 = performance.now();
+        console.log("Time3: " + (t3 -t2) );
         score_array = getScoreArray(all_matches);
+        var t4 = performance.now();
+        console.log("Time3: " + (t4 -t3) );
         buildTable(score_array);
+        var t5 = performance.now();
+        console.log("Time3: " + (t5 -t4) );
     }
     request.send(null);
+    var t1 = performance.now()
+    console.log("Time1: " + (t1 -t0) );
 }
 
 function getScoreArray(matchList){
@@ -100,6 +110,11 @@ function buildTable(scoreArray){
 
     var maxRow = 70;
     var maxCol = 70;
+
+
+    htmlString += "<tr><td id='hAxisLabel' class='axisLabel' colspan=" + (maxCol + 2) + ">Winning Team Score</td>";
+    htmlString += "<td id='vAxisLabel' class='axisLabel' rowspan=" + (maxRow + 3) + "><div class='vertical'>Losing Team Score</div></td></tr>";
+
 
     for(var i = -1; i <= maxRow; i++){
         htmlString += "<tr id='row_" + i + "'>";
@@ -139,4 +154,13 @@ function buildTable(scoreArray){
         htmlString += "</tr>";
     }
     table.innerHTML = htmlString;
+}
+
+function readCSV(){
+    var f = new File([""], "./data/demo.html");
+    var reader = new FileReader();
+    reader.onload = function(e) {
+        var text = reader.result;
+    }
+    reader.readAsText(f);
 }
