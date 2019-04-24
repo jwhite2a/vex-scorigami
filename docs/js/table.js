@@ -157,7 +157,7 @@ function buildTable(scoreArray){
 }
 
 function readCSV(){
-    var f = new File([""], "./data/demo.html");
+    var f = new File([""], "./data/demo.csv");
     var reader = new FileReader();
     reader.onload = function(e) {
         var text = reader.result;
