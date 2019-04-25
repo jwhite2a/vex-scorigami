@@ -35,6 +35,7 @@ td.axisLabel{
 	font-size: 13px;
 	text-align: center;
 	font-weight: bold;
+	vertical-align: middle;
 }
 
 td#vAxisLabel{
@@ -43,9 +44,13 @@ td#vAxisLabel{
 
 .vertical{
 	white-space: nowrap;
-	writing-mode: tb-rl;
+	writing-mode: vertical-rl;
 }
 
 #scoreTable{
 	margin: auto;
+}
+
+th.loseScoreLabel{
+	text-align: right;
 }

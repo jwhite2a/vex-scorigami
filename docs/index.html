@@ -1,30 +1,76 @@
 <html>
 
 <head>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.min.css">
-    <link rel="stylesheet" href="./styles/table.css"></link>
-    <link rel="import" href="./data/demo.csv"></link>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.7.4/css/bulma.css">
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+    <link rel="stylesheet" href="./styles/table.css">
+    <link rel="stylesheet" href="./styles/util.css">
+    <script src="js/data.js"></script>
     <script src="js/table.js"></script>
 </head>
 
 <body onload="pageLoad()">
 
+
     <div class="section">
         <div class="container">
             <div class="columns is-centered">
-                <div class=column>
-                        <h1 class="title has-text-centered">VEX Scorigami</h1>
+                <div class="column">
+                    <h1 class="title has-text-centered">VEX Scorigami</h1>
                 </div>
             </div>
         </div>
     </div>
 
     <div class="section">
-        <p> TABLE: </p>
+        <div class="container table_bar">
+            <div class="level">
+                <div class="level-item">
+                    <div class="field has-addons">
+                        <p class="control">
+                            <input id="sku_input" class="input" type="text" placeholder="Enter a sku!" value="RE-VRC-18-5649">
+                        </p>
+                        <p class="control">
+                            <button class="button" onclick=getTableBySku()>
+                                Load Event
+                            </button>
+                        </p>
+                    </div>
+                </div>
+                <div class="level-item has-text-centered">
+                    <p class="subtitle is-4"> - OR - </p>
+                </div>
+                <div class="level-item">
+                    <div class="dropdown">
+                        <div class="dropdown-trigger">
+                            <button class="button" aria-haspopup="true" aria-controls="dropdown-menu2">
+                                <span>Preset Options</span>
+                                <span class="icon is-small">
+                                        <i class="fas fa-angle-down" aria-hidden="true"></i>
+                                </span>
+                            </button>
+                        </div>
+                        <div class="dropdown-menu" id="dropdown-menu2" role="menu">
+                            <div class="dropdown-content">
+                                            <a class="dropdown-item" onclick=getTableByPreset_AllTurningPoint()>
+                                                All Matches in Turning Point
+                                            </a>       
+                                    <hr class="dropdown-divider">
+                                    
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="section">
         <table id="scoreTable">
             <tbody>
                 <tr>
-                <td id="hLabel" class=axisLabel colspan="75">Winning Team Score</td>
+                    <td id="hLabel" class=axisLabel colspan="75">Winning Team Score</td>
                 </tr>
                 <tr id="row-1">
                     <th id="col">0</th>
@@ -32,24 +78,46 @@
             </tbody>
         </table>
     </div>
-    
+
     <div class="section">
+        <div class="container page_text">
+                <div class="columns is-centered">
+                        <div class="column">
         <h2 class="title is-4 has-text-centered"> What is Scorigami?</h2>
-        <p>Scorigami is a concept proposed by Jon Bois. Fundementally, the chart above represents every possible win-lose score pair. If such a pair is scored, the box gets filled. You can find more information about the origin and rules of Scorigami <a href="https://nflscorigami.com/"> here</a>.</p>
+        <p>Scorigami is a concept proposed by Jon Bois. Fundamentally, the chart above represents every possible
+            win-lose score pair. If such a pair is scored, the box gets filled. You can find more information about the
+            origin and rules of Scorigami <a href="https://nflscorigami.com/"> here</a>.</p>
+        </div>
+    </div>
+</div>
+</div>
+    <div class="section">
+        <div class="container page_text">
+                <div class="columns is-centered">
+                        <div class="column">
             <h2 class="title is-4 has-text-centered"> How does this work?</h2>
-            <p>Thanks to the amazing API at vexdb.io, this entire project was made without major difficulty!</p>    
+        <p>Thanks to the amazing API at vexdb.io, this entire project was made without major difficulty!</p>
     </div>
-    <div>
-        <button id="testing" onclick="pageLoad()">Testing</button>
+</div>
+</div>
+</div>
+    <div class="section">
+            <div class="container page_text">
+                    <div class="columns is-centered">
+                            <div class="column">
+            <h3 class="title is-5 has-text-centered"> More Info</h2>
+        <p>This is only the beginning of the project! Please leave suggestions on the Github Page <a href="https://github.com/jwhite2a/vex-scorigami">here</a>. If enough people 
+        show interest, I'll make it a priority to expand this visualization to include the items below: </p>
+        <ul class = "mylist">
+            <li>Make scoreboard of teams that make the most Scorigamis</li>
+            <li>Allow users to see what match and teams correspond to a Scorigami</li>
+            <li>Improve speed of loading matches</li>
+            <li>Add other VEX Seasons</li>
+            <li>Add functionality to toggle count and shade</li>
+            <li>Add timeslide to view how Scorigami board changes over season</li>
+        </ul>
     </div>
-    <div>
-        <button id="readCSV" onclick="readCSV()">read CSV</button>
-
-    </div>
-    <div>
-        <img src="img/maxresdefault.jpg" alt="hello">
-        <a href="data/demo.csv">click for download</a> 
-    </div>
-</body>
-
+</div>
+</div>
+</div>
 </html>

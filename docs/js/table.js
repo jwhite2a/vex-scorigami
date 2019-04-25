@@ -1,7 +1,22 @@
 function pageLoad(){
-    
-    getData();
+
+    var dropdown = document.querySelector('.dropdown');
+    dropdown.addEventListener('click', function(event) {
+        event.stopPropagation();
+        dropdown.classList.toggle('is-active');});
+
+    getTableByPreset_AllTurningPoint();
 }
+
+function getTableBySku(){
+    var sku = document.getElementById("sku_input").value;
+    getData(sku)
+}
+
+function getTableByPreset_AllTurningPoint(){
+    buildTable(turning_point_all_matches)
+}
+
 
 var mainMatches = []
 
@@ -52,9 +67,9 @@ class SimpleMatch {
 }
 
 
-function getData(){
+function getData(sku){
     var t0 = performance.now();
-    var url = "https://api.vexdb.io/v1/get_matches?sku=RE-VRC-18-5649"
+    var url = "https://api.vexdb.io/v1/get_matches?sku=" + sku;
     var request = new XMLHttpRequest();
     request.open('GET', url, true);
     request.responseType = 'json';
@@ -77,6 +92,8 @@ function getData(){
         var t4 = performance.now();
         console.log("Time3: " + (t4 -t3) );
         buildTable(score_array);
+        //buildTable(turning_point_all_matches)
+        
         var t5 = performance.now();
         console.log("Time3: " + (t5 -t4) );
     }
@@ -87,7 +104,7 @@ function getData(){
 
 function getScoreArray(matchList){
     var array  = []
-    var maxScore = 70;
+    var maxScore = 45; //for turning point
     for(var i = 0; i <= maxScore; i++){
         var row = []
         for(var j = 0; j <=maxScore; j++){
@@ -108,21 +125,24 @@ function buildTable(scoreArray){
     var table = document.getElementById("scoreTable");
     var htmlString = "";
 
-    var maxRow = 70;
-    var maxCol = 70;
-
+    var maxRow = scoreArray.length;
+    var maxCol = scoreArray[0].length;
+    var max_combined_score = 57 //for turning point
+    var max_row_score = Math.floor(max_combined_score / 2) + 2 
+    var season = "Turning Point" //for season dependant black boxes
 
     htmlString += "<tr><td id='hAxisLabel' class='axisLabel' colspan=" + (maxCol + 2) + ">Winning Team Score</td>";
+    //htmlString += "<td style='width: 3px;'></td>";
     htmlString += "<td id='vAxisLabel' class='axisLabel' rowspan=" + (maxRow + 3) + "><div class='vertical'>Losing Team Score</div></td></tr>";
 
 
-    for(var i = -1; i <= maxRow; i++){
+    for(var i = -1; i < max_row_score; i++){
         htmlString += "<tr id='row_" + i + "'>";
-        for(var j = 0; j <= maxCol; j++){
+        for(var j = 0; j < maxCol+1; j++){
             //label row
             if(i === -1){
                 //don't label top right cell
-                if(j > maxCol){
+                if(j == maxCol){
                     htmlString += "<th></th>"
                 }
                 else{
@@ -130,22 +150,69 @@ function buildTable(scoreArray){
                 }
             }
             else{
-                //black squares
-                if(j <= i-1){
+                //row labels
+                if(j == maxCol){
+                    htmlString += "<th class='loseScoreLabel' id='rowHeader_" + i + "'>" + i + "</th>";
+                }
+                 //black squares
+                else if((j <= i-1)||(j+i > max_combined_score)) {
                     htmlString += "<td class='black'></td>";
                 }
-                //row labels
-                else if(j === maxCol + 1){
-                    htmlString += "<th id='rowHeader_" + i + "'>" + i + "</th>";
-                }
+                
                 //color green
                 else if(scoreArray[i][j] > 0){
                     htmlString += "<td id='cell_" + i + "-" + j + "' class='green'>" + scoreArray[i][j] + "</td>";
                 }
-                //no color
                 else{
-                    htmlString += "<td id='cell_" + i + "-" + j + "' class='blank'>0</td>";
+                    switch(season){
+                    case "Turning Point":
+                        switch(j){
+                            case 45:
+                                switch(i){
+                                    
+                                    case 1:
+                                    case 2:
+                                    case 4:
+                                    case 5:
+                                    case 7:
+                                    case 8:
+                                    case 10:
+                                    case 11:
+                                        htmlString += "<td class='black'></td>";
+                                        break;
+                                        
+                                    default:
+                                        htmlString += "<td id='cell_" + i + "-" + j + "' class='blank'>0</td>";
+                                        break;
+                                }
+                                break;
+                                
+                            case 44:
+                                switch(i){
+                                    case 2:
+                                    case 5:
+                                    case 8:
+                                    case 11:
+                                        htmlString += "<td class='black'></td>";
+                                        break;
+                                    default:
+                                        htmlString += "<td id='cell_" + i + "-" + j + "' class='blank'>0</td>";
+                                        break;
+                                }
+                                break;
+                            
+                           default:
+                                        htmlString += "<td id='cell_" + i + "-" + j + "' class='blank'>0</td>";
+                                        break;
+                        }
+                        break
+                    default:
+                        htmlString += "<td id='cell_" + i + "-" + j + "' class='blank'>0</td>";
+                        break
+                    }
+                    //no color                    
                 }
+                 
             }
 
 

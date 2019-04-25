@@ -7,6 +7,7 @@ SimpleMatch = namedtuple("Match", ['winScore', 'loseScore'])
 
 def get_season_events(season):
     url = "https://api.vexdb.io/v1/get_events?season=" + season
+    url = url.replace(" ", "%20")
     nodata_url = url + "&nodata=true"
     http=urllib3.PoolManager()
     response = http.request("GET", url)
@@ -59,8 +60,15 @@ def get_max_score(matches):
             max_score = match.winScore
     return max_score
 
-def write_arrary_csv(matches, filename):
-    max_score = get_max_score(matches)
+def get_season_max_possible_alliance(season):
+    if season == "Turning Point":
+        return 45
+    else:
+        print("Error: Season Not Found")
+        return 100
+
+def write_arrary(matches, filename, season):
+    max_score = get_season_max_possible_alliance(season)
     rows = []
     i = 0
     while i <= max_score:
@@ -75,15 +83,35 @@ def write_arrary_csv(matches, filename):
         rows[match.loseScore][match.winScore] += 1
 
     f = open(filename, 'w')
-    f.write(str(max_score) + ",")
+    f.write('[')
     for i, row in enumerate(rows):
-        f.write("\n")
+        f.write("\n[")
         for j, val in enumerate(row):
-            if j >= i:
+            if j is len(row)-1:
+                f.write(str(val))
+            else:
                 f.write(str(val) + ",")
+        if i is len(rows)-1:
+            f.write(']\n]')
+        else:
+            f.write('],\n')
+
+        
 
 
 if __name__ == "__main__":
-    get_season_events("Starstruck")
+    '''
+    season = "Turning Point"
+    get_season_events(season)
     matches = get_simple_matches("RE-VRC-18-5649")
-    write_arrary_csv(matches, "./docs/data/demo.csv")
+    write_arrary(matches, "./docs/data/turning_point.txt", season)
+    '''
+
+    season = "Turning Point"
+    events = get_season_events(season)
+    matches = []
+    for i, event in enumerate(events):
+        if i % 25 == 0:
+            print("processing event: " + str(i) + " : " + str(event.sku)
+        matches.extend(get_simple_matches(event.sku))
+    write_arrary(matches, "./docs/data/turning_point.txt", season)
