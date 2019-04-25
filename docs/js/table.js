@@ -17,6 +17,10 @@ function getTableByPreset_AllTurningPoint(){
     buildTable(turning_point_all_matches)
 }
 
+function getTableByPreset_TurningPointWorlds(){
+    getData('RE-VRC-18-6082')
+}
+
 
 var mainMatches = []
 
@@ -68,18 +72,24 @@ class SimpleMatch {
 
 
 function getData(sku){
+    var loadBar = document.getElementById("loadingBar")
+    loadBar.value = 0
     var t0 = performance.now();
-    var url = "https://api.vexdb.io/v1/get_matches?sku=" + sku;
+    var url = "https://api.vexdb.io/v1/get_matches?scored=1&sku=" + sku;
     var request = new XMLHttpRequest();
     request.open('GET', url, true);
     request.responseType = 'json';
     var all_matches = [];
     request.onload = function(e) {
         var t2 = performance.now();
+        loadBar.value = 10
         console.log("Time2: " + (t2 -t1) );
         console.log(request.status);
         console.log(request.response);
+        
         for(let i = 0; i < request.response.result.length; i++){
+            
+            setTimeout(function(){loadBar.value = (i/request.response.result.length)*(95-10) + 10;}, 0);
             var json_match = request.response.result[i];
             var match = new SimpleMatch(
                                     redScore = json_match.redscore,
@@ -90,16 +100,19 @@ function getData(sku){
         console.log("Time3: " + (t3 -t2) );
         score_array = getScoreArray(all_matches);
         var t4 = performance.now();
-        console.log("Time3: " + (t4 -t3) );
+        console.log("Time4: " + (t4 -t3) );
+        loadBar.value = 95
         buildTable(score_array);
+        setTimeout(function(){loadBar.value = 100;}, 200);
         //buildTable(turning_point_all_matches)
         
         var t5 = performance.now();
-        console.log("Time3: " + (t5 -t4) );
+        console.log("Time5: " + (t5 -t4) );
     }
     request.send(null);
     var t1 = performance.now()
     console.log("Time1: " + (t1 -t0) );
+    loadBar.value = 5
 }
 
 function getScoreArray(matchList){
